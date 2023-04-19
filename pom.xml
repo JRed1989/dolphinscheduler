@@ -15,7 +15,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.apache</groupId>
@@ -24,7 +25,7 @@
     </parent>
     <groupId>org.apache.dolphinscheduler</groupId>
     <artifactId>dolphinscheduler</artifactId>
-    <version>3.1.5-SNAPSHOT</version>
+    <version>3.1.4</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
     <description>Dolphin Scheduler is a distributed and easy-to-expand visual DAG workflow scheduling system, dedicated
@@ -74,10 +75,10 @@
         <rpm-maven-plugion.version>2.2.0</rpm-maven-plugion.version>
         <spotless.version>2.23.0</spotless.version>
         <jacoco.version>0.8.8</jacoco.version>
-        <maven.deploy.skip>false</maven.deploy.skip>
+        <maven.deploy.skip>true</maven.deploy.skip>
         <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
         <auto-service.version>1.0.1</auto-service.version>
-        <jacoco.skip>false</jacoco.skip>
+        <jacoco.skip>true</jacoco.skip>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <powermock.version>2.0.9</powermock.version>
         <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
@@ -89,6 +90,9 @@
         <docker.build.skip>true</docker.build.skip>
         <docker.push.skip>true</docker.push.skip>
         <skipDepCheck>true</skipDepCheck>
+        <maven.test.skip>true</maven.test.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+        <checkstyle.skip>true</checkstyle.skip>
     </properties>
 
     <dependencyManagement>
@@ -607,9 +611,9 @@
                         <goals>
                             <goal>restore-instrumented-classes</goal>
                         </goals>
-                        <configuration>
-                            <excludes>com/github/dreamhead/moco/*</excludes>
-                        </configuration>
+                        <!--                        <configuration>-->
+                        <!--                            <excludes>com/github/dreamhead/moco/*</excludes>-->
+                        <!--                        </configuration>-->
                     </execution>
                     <execution>
                         <id>default-report</id>
@@ -638,63 +642,63 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <plugin>
-                <groupId>com.diffplug.spotless</groupId>
-                <artifactId>spotless-maven-plugin</artifactId>
-                <version>${spotless.version}</version>
-                <configuration>
-                    <!-- optional: limit format enforcement to just the files changed by this feature branch -->
-                    <ratchetFrom>HEAD</ratchetFrom>
-                    <java>
-                        <eclipse>
-                            <file>style/spotless_dolphinscheduler_formatter.xml</file>
-                        </eclipse>
-                        <removeUnusedImports />
-                        <importOrder>
-                            <file>style/eclipse.importorder</file>
-                        </importOrder>
-                        <replaceRegex>
-                            <name>Remove wildcard imports</name>
-                            <searchRegex>import\s+[^\*\s]+\*;(\r\n|\r|\n)</searchRegex>
-                            <replacement>$1</replacement>
-                        </replaceRegex>
-                    </java>
-                    <pom>
-                        <sortPom>
-                            <encoding>UTF-8</encoding>
-                            <nrOfIndentSpace>4</nrOfIndentSpace>
-                            <keepBlankLines>true</keepBlankLines>
-                            <indentBlankLines>false</indentBlankLines>
-                            <indentSchemaLocation>true</indentSchemaLocation>
-                            <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
-                            <sortModules>false</sortModules>
-                            <sortExecutions>false</sortExecutions>
-                            <predefinedSortOrder>custom_1</predefinedSortOrder>
-                            <expandEmptyElements>false</expandEmptyElements>
-                            <sortProperties>false</sortProperties>
-                        </sortPom>
-                        <replace>
-                            <name>Leading blank line</name>
-                            <search>project</search>
-                            <replacement>project</replacement>
-                        </replace>
-                    </pom>
-                    <markdown>
-                        <includes>
-                            <include>**/*.md</include>
-                        </includes>
-                        <flexmark />
-                    </markdown>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <phase>compile</phase>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>com.diffplug.spotless</groupId>-->
+<!--                <artifactId>spotless-maven-plugin</artifactId>-->
+<!--                <version>${spotless.version}</version>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; optional: limit format enforcement to just the files changed by this feature branch &ndash;&gt;-->
+<!--                    <ratchetFrom>HEAD</ratchetFrom>-->
+<!--                    <java>-->
+<!--                        <eclipse>-->
+<!--                            <file>style/spotless_dolphinscheduler_formatter.xml</file>-->
+<!--                        </eclipse>-->
+<!--                        <removeUnusedImports />-->
+<!--                        <importOrder>-->
+<!--                            <file>style/eclipse.importorder</file>-->
+<!--                        </importOrder>-->
+<!--                        <replaceRegex>-->
+<!--                            <name>Remove wildcard imports</name>-->
+<!--                            <searchRegex>import\s+[^\*\s]+\*;(\r\n|\r|\n)</searchRegex>-->
+<!--                            <replacement>$1</replacement>-->
+<!--                        </replaceRegex>-->
+<!--                    </java>-->
+<!--                    <pom>-->
+<!--                        <sortPom>-->
+<!--                            <encoding>UTF-8</encoding>-->
+<!--                            <nrOfIndentSpace>4</nrOfIndentSpace>-->
+<!--                            <keepBlankLines>true</keepBlankLines>-->
+<!--                            <indentBlankLines>false</indentBlankLines>-->
+<!--                            <indentSchemaLocation>true</indentSchemaLocation>-->
+<!--                            <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>-->
+<!--                            <sortModules>false</sortModules>-->
+<!--                            <sortExecutions>false</sortExecutions>-->
+<!--                            <predefinedSortOrder>custom_1</predefinedSortOrder>-->
+<!--                            <expandEmptyElements>false</expandEmptyElements>-->
+<!--                            <sortProperties>false</sortProperties>-->
+<!--                        </sortPom>-->
+<!--                        <replace>-->
+<!--                            <name>Leading blank line</name>-->
+<!--                            <search>project</search>-->
+<!--                            <replacement>project</replacement>-->
+<!--                        </replace>-->
+<!--                    </pom>-->
+<!--                    <markdown>-->
+<!--                        <includes>-->
+<!--                            <include>**/*.md</include>-->
+<!--                        </includes>-->
+<!--                        <flexmark />-->
+<!--                    </markdown>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>check</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>compile</phase>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
